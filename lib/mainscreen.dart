@@ -9,9 +9,17 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // 리스트 방식으로 화면에 보여주기 위한 리스트 변수
+  List<String> todoList = [];
+
   // 데이터 전달 방법 1
   void addTodo({required String todoText}) {
-    setState(() {});
+    setState(() {
+      todoList.add(todoText);
+    });
+
+    // bottom sheet 닫기
+    Navigator.pop(context);
   }
 
   @override
@@ -41,7 +49,12 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: SizedBox(child: Text("")),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(title: Text(todoList[index]));
+        },
+        itemCount: todoList.length,
+      ),
     );
   }
 }
