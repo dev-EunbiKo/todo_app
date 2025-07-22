@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/add_task.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,14 +16,34 @@ class _MainScreenState extends State<MainScreen> {
   // 데이터 전달 방법 1
   void addTodo({required String todoText}) {
     setState(() {
-      // todoList.add(todoText);
-
       // 정렬을 위해 add -> insert 로 변경
       todoList.insert(0, todoText);
     });
 
+    writeLocalData();
+
     // bottom sheet 닫기
     Navigator.pop(context);
+  }
+
+  // 저장 기능
+  void writeLocalData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('todoList', todoList);
+  }
+
+  void loadData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      todoList = (prefs.getStringList('todoList') ?? []).toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
 
   @override
@@ -68,6 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                         setState(() {
                           todoList.removeAt(index);
                         });
+                        writeLocalData();
                         Navigator.pop(context);
                       },
                       child: const Text("Task Done!"),
