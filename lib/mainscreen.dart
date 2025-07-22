@@ -54,7 +54,29 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return ListTile(title: Text(todoList[index]));
+          return ListTile(
+            title: Text(todoList[index]),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          todoList.removeAt(index);
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Task Done!"),
+                    ),
+                  );
+                },
+              );
+            },
+          );
         },
         itemCount: todoList.length,
       ),
