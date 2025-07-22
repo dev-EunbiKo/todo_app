@@ -9,13 +9,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String text = "to do test";
-
   // 데이터 전달 방법 1
-  void updateText({required String todoText}) {
-    setState(() {
-      text = todoText;
-    });
+  void addTodo({required String todoText}) {
+    setState(() {});
   }
 
   @override
@@ -35,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
                     padding: MediaQuery.of(context).viewInsets,
                     child: SizedBox(
                       height: 250,
-                      child: AddTask(updateText: updateText),
+                      child: AddTask(addTodo: addTodo),
                     ),
                   );
                 },
@@ -45,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: SizedBox(child: Text(text)),
+      body: SizedBox(child: Text("")),
     );
   }
 }
