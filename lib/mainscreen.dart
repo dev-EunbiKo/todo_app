@@ -15,7 +15,10 @@ class _MainScreenState extends State<MainScreen> {
   // 데이터 전달 방법 1
   void addTodo({required String todoText}) {
     setState(() {
-      todoList.add(todoText);
+      // todoList.add(todoText);
+
+      // 정렬을 위해 add -> insert 로 변경
+      todoList.insert(0, todoText);
     });
 
     // bottom sheet 닫기
