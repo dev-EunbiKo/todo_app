@@ -129,7 +129,15 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
+      body:
+          (todoList.isEmpty)
+              ? Center(
+                child: Text(
+                  "No Items on the List",
+                  style: TextStyle(fontSize: 20),
+                ),
+              )
+              : ListView.builder(
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(todoList[index]),
