@@ -138,34 +138,55 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               )
               : ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(todoList[index]),
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          todoList.removeAt(index);
-                        });
-                        saveTodo();
-                        Navigator.pop(context);
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(
+                      color: Colors.red,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.check),
+                          ),
+                        ],
+                      ),
+                    ),
+                    direction: DismissDirection.startToEnd,
+                    onDismissed: (direction) {
+                      setState(() {
+                        todoList.removeAt(index);
+                      });
+                      saveTodo();
+                    },
+                    child: ListTile(
+                      title: Text(todoList[index]),
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(20),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    todoList.removeAt(index);
+                                  });
+                                  saveTodo();
+                                  Navigator.pop(context);
+                                },
+                                child: const Text("Task Done!"),
+                              ),
+                            );
+                          },
+                        );
                       },
-                      child: const Text("Task Done!"),
                     ),
                   );
                 },
-              );
-            },
-          );
-        },
-        itemCount: todoList.length,
-      ),
+                itemCount: todoList.length,
+              ),
     );
   }
 }
