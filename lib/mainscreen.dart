@@ -106,29 +106,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
       ),
-      appBar: AppBar(
-        title: const Text('TODO App'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: SizedBox(
-                      height: 250,
-                      child: AddTask(addTodo: addTodo),
-                    ),
-                  );
-                },
-              );
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text('TODO App'), centerTitle: true),
       body:
           (todoList.isEmpty)
               ? Center(
@@ -187,6 +165,21 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 itemCount: todoList.length,
               ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: SizedBox(height: 250, child: AddTask(addTodo: addTodo)),
+              );
+            },
+          );
+        },
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
 }
